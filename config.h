@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "SauceCodePro Nerd Font Mono:pixelsize=24:antialias=true:autohint=true";
-static int borderpx = 4;
+static char *font = "Monaco:pixelsize=16:antialias=true:autohint=true,GoMono Nerd Font:pixelsize=16:antialias=true:autohint=true,PingFang SC:pixelsize=16:antialias=true:autohint=true";
+static int borderpx = 10;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -16,7 +16,7 @@ static int borderpx = 4;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/sh";
+static char *shell = "/usr/bin/zsh";
 char *utmp = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -43,13 +43,13 @@ int allowaltscreen = 1;
 
 /* frames per second st should at maximum draw to the screen */
 static unsigned int xfps = 120;
-static unsigned int actionfps = 30;
+static unsigned int actionfps = 60;
 
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 500;
+static unsigned int blinktimeout = 0;
 
 /*
  * thickness of underline and bar cursors
@@ -60,7 +60,7 @@ static unsigned int cursorthickness = 2;
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
-static int bellvolume = 0;
+static int bellvolume = 100;
 
 /* default TERM value */
 char *termname = "st-256color";
@@ -80,37 +80,43 @@ char *termname = "st-256color";
  *
  *	stty tabs
  */
-unsigned int tabspaces = 8;
+unsigned int tabspaces = 2;
 
 /* bg opacity */
-float alpha = 0.9;
+float alpha = 0.93;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 
   /* 8 normal colors */
-  [0] = "#000000", /* black   */
-  [1] = "#ff5555", /* red     */
-  [2] = "#50fa7b", /* green   */
-  [3] = "#f1fa8c", /* yellow  */
-  [4] = "#bd93f9", /* blue    */
-  [5] = "#ff79c6", /* magenta */
-  [6] = "#8be9fd", /* cyan    */
-  [7] = "#bbbbbb", /* white   */
+  [0] = "#1e1e1e", /* black   */
+  [1] = "#cf6a4c", /* red     */
+  [2] = "#8f9d6a", /* green   */
+  [3] = "#f9ee98", /* yellow  */
+  [4] = "#7587a6", /* blue    */
+  [5] = "#9b859d", /* magenta */
+  [6] = "#afc4db", /* cyan    */
+  [7] = "#a7a7a7", /* white   */
 
   /* 8 bright colors */
-  [8]  = "#44475a", /* black   */
-  [9]  = "#ff5555", /* red     */
-  [10] = "#50fa7b", /* green   */
-  [11] = "#f1fa8c", /* yellow  */
-  [12] = "#bd93f9", /* blue    */
-  [13] = "#ff79c6", /* magenta */
-  [14] = "#8be9fd", /* cyan    */
+  [8]  = "#5f5a60", /* black   */
+  [9]  = "#cf6a4c", /* red     */
+  [10] = "#8f9d6a", /* green   */
+  [11] = "#f9ee98", /* yellow  */
+  [12] = "#7587a6", /* blue    */
+  [13] = "#9b859d", /* magenta */
+  [14] = "#afc4db", /* cyan    */
   [15] = "#ffffff", /* white   */
 
+	[17] = "#9b703f",
+	[18] = "#323537",
+	[19] = "#464b50",
+	[20] = "#838184",
+	[21] = "#c3c3c3",
+
   /* special colors */
-  [256] = "#282a36", /* background */
-  [257] = "#f8f8f2", /* foreground */
+  [256] = "#1e1e1e", /* background */
+  [257] = "#a7a7a7", /* foreground */
 };
 
 /*
@@ -180,8 +186,12 @@ static uint forcemousemod = ShiftMask;
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+	/* { XK_NO_MOD,            Button4, ttysend,        {.s = "\031"} }, */
+	/* { XK_NO_MOD,            Button5, ttysend,        {.s = "\005"} }, */
+	{ XK_NO_MOD,            Button4, kscrollup,      {.i = 1}         },
+	{ XK_NO_MOD,            Button5, kscrolldown,    {.i = 1}         }, 
+  { ControlMask,          Button4, zoom,           {.f = +1}        },
+  { ControlMask,          Button5, zoom,           {.f = -1}        },
 };
 
 /* Internal keyboard shortcuts. */
@@ -204,20 +214,20 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,            XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,              XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,             XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,                XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,                XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,                XK_Home,        zoomreset,      {.f =  0} },
+	{ ControlMask,            XK_equal,       zoom,           {.f = +1} },
+	{ ControlMask,            XK_minus,       zoom,           {.f = -1} },
+	{ ControlMask,            XK_0,           zoomreset,      {.f =  0} },
 	{ TERMMOD,                XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,                XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,                XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,              XK_Insert,      selpaste,       {.i =  0} },
 	{ Mod1Mask,               XK_Num_Lock,    numlock,        {.i =  0} },
 	{ Mod1Mask,               XK_l,           copyurl,        {.i =  0} },
-	{ Mod1Mask,               XK_u,           kscrollup,      {.i =  1} },
-	{ Mod1Mask,               XK_e,           kscrolldown,    {.i =  1} },
-	{ Mod1Mask|ControlMask,   XK_u,           kscrollup,      {.i = -1} },
-	{ Mod1Mask|ControlMask,   XK_e,           kscrolldown,    {.i = -1} },
-	{ Mod1Mask|ControlMask,   XK_l,           externalpipe,   {.v = openurlcmd } },
+	{ Mod1Mask,               XK_j,           kscrollup,      {.i =  1} },
+	{ Mod1Mask,               XK_k,           kscrolldown,    {.i =  1} },
+	{ Mod1Mask|ShiftMask,     XK_J,           kscrollup,      {.i = -1} },
+	{ Mod1Mask|ShiftMask,     XK_K,           kscrolldown,    {.i = -1} },
+	{ Mod1Mask,               XK_b,           externalpipe,   {.v = openurlcmd } },
 	{ Mod1Mask,               XK_y,           externalpipe,   {.v = copyurlcmd } },
 	{ Mod1Mask,               XK_o,           externalpipe,   {.v = copyoutput } },
 	{ AltMask,                XK_c,           normalMode,     {.i =  0} },
