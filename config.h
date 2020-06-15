@@ -6,9 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font =
-    "Monaco:pixelsize=16:antialias=true:autohint=true,GoMono Nerd "
-    "Font:pixelsize=16:antialias=true:autohint=true,PingFang "
-    "SC:pixelsize=16:antialias=true:autohint=true";
+    "Monaco:pixelsize=15:antialias=true:autohint=true";
 static int borderpx = 10;
 
 /*
@@ -90,37 +88,87 @@ float alpha = 0.93;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
+    /* light */
+    /* /\* 8 normal colors *\/ */
+    /* [0] = "#073642", /\* black   *\/ */
+    /* [1] = "#dc322f", /\* red     *\/ */
+    /* [2] = "#859900", /\* green   *\/ */
+    /* [3] = "#b58900", /\* yellow  *\/ */
+    /* [4] = "#268bd2", /\* blue    *\/ */
+    /* [5] = "#d33682", /\* magenta *\/ */
+    /* [6] = "#2aa198", /\* cyan    *\/ */
+    /* [7] = "#eee8d5", /\* white   *\/ */
 
+    /* /\* 8 bright colors *\/ */
+    /* [8]  = "#002b36", /\* black   *\/ */
+    /* [9]  = "#cb4b16", /\* red     *\/ */
+    /* [10] = "#586e75", /\* green   *\/ */
+    /* [11] = "#657b83", /\* yellow  *\/ */
+    /* [12] = "#839496", /\* blue    *\/ */
+    /* [13] = "#6c71c4", /\* magenta *\/ */
+    /* [14] = "#93a1a1", /\* cyan    *\/ */
+    /* [15] = "#fdf6e3", /\* white   *\/ */
+
+    /* [17] = "#9b703f", */
+    /* [18] = "#323537", */
+    /* [19] = "#464b50", */
+    /* [20] = "#838184", */
+    /* [21] = "#c3c3c3", */
+
+    /* /\* special colors *\/ */
+    /* [256] = "#fdf6e3", /\* background *\/ */
+    /* [257] = "#657b83", /\* foreground *\/ */
+
+    /* dark */
+    /* /\* 8 normal colors *\/ */
+    /* [0] = "#000000", /\* black   *\/ */
+    /* [1] = "#ff5555", /\* red     *\/ */
+    /* [2] = "#50fa7b", /\* green   *\/ */
+    /* [3] = "#f1fa8c", /\* yellow  *\/ */
+    /* [4] = "#bd93f9", /\* blue    *\/ */
+    /* [5] = "#ff79c6", /\* magenta *\/ */
+    /* [6] = "#8be9fd", /\* cyan    *\/ */
+    /* [7] = "#bbbbbb", /\* white   *\/ */
+
+    /* /\* 8 bright colors *\/ */
+    /* [8] = "#44475a",  /\* black   *\/ */
+    /* [9] = "#ff5555",  /\* red     *\/ */
+    /* [10] = "#50fa7b", /\* green   *\/ */
+    /* [11] = "#f1fa8c", /\* yellow  *\/ */
+    /* [12] = "#bd93f9", /\* blue    *\/ */
+    /* [13] = "#ff79c6", /\* magenta *\/ */
+    /* [14] = "#8be9fd", /\* cyan    *\/ */
+    /* [15] = "#ffffff", /\* white   *\/ */
+
+    /* /\* special colors *\/ */
+    /* [256] = "#282a36", /\* background *\/ */
+    /* [257] = "#f8f8f2", /\* foreground *\/ */
+
+    /* gruvbox */
     /* 8 normal colors */
-    [0] = "#073642", /* black   */
-    [1] = "#dc322f", /* red     */
-    [2] = "#859900", /* green   */
-    [3] = "#b58900", /* yellow  */
-    [4] = "#268bd2", /* blue    */
-    [5] = "#d33682", /* magenta */
-    [6] = "#2aa198", /* cyan    */
-    [7] = "#eee8d5", /* white   */
+    [0] = "#282828", /* black   */
+    [1] = "#cc241d", /* red     */
+    [2] = "#98971a", /* green   */
+    [3] = "#d79921", /* yellow  */
+    [4] = "#458588", /* blue    */
+    [5] = "#b16286", /* magenta */
+    [6] = "#689d6a", /* cyan    */
+    [7] = "#a89984", /* white   */
 
     /* 8 bright colors */
-    [8]  = "#002b36", /* black   */
-    [9]  = "#cb4b16", /* red     */
-    [10] = "#586e75", /* green   */
-    [11] = "#657b83", /* yellow  */
-    [12] = "#839496", /* blue    */
-    [13] = "#6c71c4", /* magenta */
-    [14] = "#93a1a1", /* cyan    */
-    [15] = "#fdf6e3", /* white   */
-
-    [17] = "#9b703f",
-    [18] = "#323537",
-    [19] = "#464b50",
-    [20] = "#838184",
-    [21] = "#c3c3c3",
+    [8] = "#928374",  /* black   */
+    [9] = "#fb4934",  /* red     */
+    [10] = "#b8bb26", /* green   */
+    [11] = "#fabd2f", /* yellow  */
+    [12] = "#83a598", /* blue    */
+    [13] = "#d3869b", /* magenta */
+    [14] = "#8ec07c", /* cyan    */
+    [15] = "#ebdbb2", /* white   */
 
     /* special colors */
-    [256] = "#fdf6e3", /* background */
-    [257] = "#657b83", /* foreground */
-}; 
+    [256] = "#282828", /* background */
+    [257] = "#ebdbb2", /* foreground */
+};
 /*
  * Default colors (colorname index)
  * foreground, background, cursor
@@ -146,7 +194,7 @@ unsigned int defaultunderline = 7;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 7;
 
 /*
  * Default columns and rows numbers
