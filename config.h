@@ -5,20 +5,21 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font =
-    "Monaco:pixelsize=15:antialias=true:autohint=true";
+static char *font = "Fira Code Nerd Font Mono:pixelsize=16:antialias=true:autohint=true";
 static int borderpx = 10;
 
 /*
  * What program is execed by st depends of these precedence rules:
  * 1: program passed with -e
- * 2: utmp option
+ * 2: scroll and/or utmp
  * 3: SHELL environment variable
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
 static char *shell = "/usr/bin/zsh";
 char *utmp = NULL;
+/* scroll program: to enable use a string like "scroll" */
+char *scroll = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 /* identification sequence returned in DA and DECID */
@@ -42,15 +43,24 @@ static unsigned int tripleclicktimeout = 600;
 /* alt screens */
 int allowaltscreen = 1;
 
-/* frames per second st should at maximum draw to the screen */
-static unsigned int xfps = 120;
-static unsigned int actionfps = 60;
+/* allow certain non-interactive (insecure) window operations such as:
+   setting the clipboard text */
+int allowwindowops = 0;
+
+/*
+ * draw latency range in ms - from new content/keypress/etc until drawing.
+ * within this range, st draws when content stops arriving (idle). mostly it's
+ * near minlatency, but it waits longer for slow updates to avoid partial draw.
+ * low minlatency will tear/flicker more, as it can "detect" idle too early.
+ */
+static double minlatency = 8;
+static double maxlatency = 33;
 
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 0;
+static unsigned int blinktimeout = 800;
 
 /*
  * thickness of underline and bar cursors
@@ -179,6 +189,7 @@ static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
 
 /*
+ * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
  * will reverse too. Another logic would only make the simple feature too
  * complex.
@@ -186,15 +197,17 @@ static unsigned int defaultrcs = 257;
 unsigned int defaultitalic = 7;
 unsigned int defaultunderline = 7;
 /*
- * Default shape of cursor
- * 1: Blinking Block ("█")
- * 2: Block ("█")
- * 3: Blinking Underline ("_")
- * 4: Underline ("_")
- * 6: Bar ("|")
+ * Default style of cursor
+ * 0: blinking block
+ * 1: blinking block (default)
+ * 2: steady block ("█")
+ * 3: blinking underline
+ * 4: steady underline ("_")
+ * 5: blinking bar
+ * 6: steady bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorstyle = 1;
 
 /*
  * Default columns and rows numbers
@@ -215,12 +228,6 @@ static unsigned int mousebg = 0;
  * doesn't match the ones requested.
  */
 static unsigned int defaultattr = 11;
-/// Colors for the entities that are highlighted in normal mode.
-static unsigned int highlightBg = 160;
-static unsigned int highlightFg = 15;
-/// Colors for the line and column that is marked 'current' in normal mode.
-static unsigned int currentBg = 0;
-static unsigned int currentFg = 15;
 
 /*
  * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
@@ -234,66 +241,50 @@ static uint forcemousemod = ShiftMask;
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-    /* mask                 button   function        argument       release */
-    {XK_ANY_MOD, Button2, selpaste, {.i = 0}, 1},
-    /* { XK_NO_MOD,            Button4, ttysend,        {.s = "\031"} }, */
-    /* { XK_NO_MOD,            Button5, ttysend,        {.s = "\005"} }, */
-    {XK_NO_MOD, Button4, kscrollup, {.i = 1}},
-    {XK_NO_MOD, Button5, kscrolldown, {.i = 1}},
-    {ControlMask, Button4, zoom, {.f = +1}},
-    {ControlMask, Button5, zoom, {.f = -1}},
+	/* mask                 button   function        argument       release */
+	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
+	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+  {ControlMask,           Button4, zoom,           {.f = +1}},
+  {ControlMask,           Button5, zoom,           {.f = -1}},
 };
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
-#define AltMask Mod1Mask
-#define TERMMOD (ControlMask | ShiftMask)
+#define TERMMOD (ControlMask|ShiftMask)
 
 // from @LukeSmithxyz
-static char *openurlcmd[] = {
-    "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo "
-    "'(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./"
-    "&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed "
-    "'s/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | "
-    "xargs -r xdg-open",
-    "externalpipe", NULL};
-static char *copyurlcmd[] = {
-    "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo "
-    "'(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./"
-    "&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed "
-    "'s/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr "
-    "-d '\n' | xclip -selection clipboard",
-    "externalpipe", NULL};
-static char *copyoutput[] = {"/bin/sh", "-c", "st-copyout", "externalpipe",
-                             NULL};
+static char *openurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
+    "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
+    "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
 
 static Shortcut shortcuts[] = {
-    /* mask                   keysym          function        argument */
-    {XK_ANY_MOD, XK_Break, sendbreak, {.i = 0}},
-    {ControlMask, XK_Print, toggleprinter, {.i = 0}},
-    {ShiftMask, XK_Print, printscreen, {.i = 0}},
-    {XK_ANY_MOD, XK_Print, printsel, {.i = 0}},
-    {ControlMask, XK_equal, zoom, {.f = +1}},
-    {ControlMask, XK_minus, zoom, {.f = -1}},
-    {ControlMask, XK_0, zoomreset, {.f = 0}},
-    {TERMMOD, XK_C, clipcopy, {.i = 0}},
-    {TERMMOD, XK_V, clippaste, {.i = 0}},
-    {TERMMOD, XK_Y, selpaste, {.i = 0}},
-    {ShiftMask, XK_Insert, selpaste, {.i = 0}},
-    {Mod1Mask, XK_Num_Lock, numlock, {.i = 0}},
-    {Mod1Mask, XK_l, copyurl, {.i = 0}},
-    {Mod1Mask, XK_j, kscrollup, {.i = 1}},
-    {Mod1Mask, XK_k, kscrolldown, {.i = 1}},
-    {Mod1Mask | ShiftMask, XK_J, kscrollup, {.i = -1}},
-    {Mod1Mask | ShiftMask, XK_K, kscrolldown, {.i = -1}},
-    {Mod1Mask, XK_b, externalpipe, {.v = openurlcmd}},
-    {Mod1Mask, XK_y, externalpipe, {.v = copyurlcmd}},
-    {Mod1Mask, XK_o, externalpipe, {.v = copyoutput}},
-    {AltMask, XK_c, normalMode, {.i = 0}},
-    {ShiftMask, XK_Page_Up, kscrollup, {.i = -1}},
-    {ShiftMask, XK_Page_Down, kscrolldown, {.i = -1}},
+	/* mask                 keysym          function        argument */
+	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
+	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
+	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
+	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
+	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
+	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+  { ControlMask,          XK_equal,       zoom,           {.f = +1} },
+  { ControlMask,          XK_minus,       zoom,           {.f = -1} },
+  { ControlMask,          XK_0,           zoomreset,      {.f =  0} },
+  { Mod1Mask,             XK_j,           kscrollup,      {.i =  1} },
+  { Mod1Mask,             XK_k,           kscrolldown,    {.i =  1} },
 };
 
 /*
@@ -561,19 +552,7 @@ static uint selmasks[] = {
  * Printable characters in ASCII, used to estimate the advance width
  * of single wide characters.
  */
-static char ascii_printable[] = " !\"#$%&'()*+,-./0123456789:;<=>?"
-                                "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
-                                "`abcdefghijklmnopqrstuvwxyz{|}~";
-
-/// word sepearors normal mode
-char wordDelimSmall[] = " \t!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-char wordDelimLarge[] = " \t"; /// <Word sepearors normal mode (capital W)
-
-/// Shortcusts executed in normal mode (which should not already be in use)
-struct NormalModeShortcuts normalModeShortcuts[] = {
-    {'C', "?Building\n"}, {'c', "/Building\n"},     {'F', "?: error:\n"},
-    {'f', "/: error:\n"}, {'X', "?juli@machine\n"}, {'x', "/juli@machine\n"},
-};
-
-size_t const amountNormalModeShortcuts =
-    sizeof(normalModeShortcuts) / sizeof(*normalModeShortcuts);
+static char ascii_printable[] =
+	" !\"#$%&'()*+,-./0123456789:;<=>?"
+	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+	"`abcdefghijklmnopqrstuvwxyz{|}~";
