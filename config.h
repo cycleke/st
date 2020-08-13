@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Fira Code Nerd Font Mono:pixelsize=16:antialias=true:autohint=true";
-static int borderpx = 10;
+static char *font = "Fira Code Nerd Font Mono:pixelsize=15:antialias=true:autohint=true";
+static int borderpx = 9;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -94,108 +94,100 @@ char *termname = "st-256color";
 unsigned int tabspaces = 2;
 
 /* bg opacity */
-float alpha = 0.93;
+float alpha = 0.9;
 
-/* Terminal colors (16 first used in escape sequence) */
+#ifdef GRUVBOX
 static const char *colorname[] = {
-    /* light */
-    /* /\* 8 normal colors *\/ */
-    /* [0] = "#073642", /\* black   *\/ */
-    /* [1] = "#dc322f", /\* red     *\/ */
-    /* [2] = "#859900", /\* green   *\/ */
-    /* [3] = "#b58900", /\* yellow  *\/ */
-    /* [4] = "#268bd2", /\* blue    *\/ */
-    /* [5] = "#d33682", /\* magenta *\/ */
-    /* [6] = "#2aa198", /\* cyan    *\/ */
-    /* [7] = "#eee8d5", /\* white   *\/ */
-
-    /* /\* 8 bright colors *\/ */
-    /* [8]  = "#002b36", /\* black   *\/ */
-    /* [9]  = "#cb4b16", /\* red     *\/ */
-    /* [10] = "#586e75", /\* green   *\/ */
-    /* [11] = "#657b83", /\* yellow  *\/ */
-    /* [12] = "#839496", /\* blue    *\/ */
-    /* [13] = "#6c71c4", /\* magenta *\/ */
-    /* [14] = "#93a1a1", /\* cyan    *\/ */
-    /* [15] = "#fdf6e3", /\* white   *\/ */
-
-    /* [17] = "#9b703f", */
-    /* [18] = "#323537", */
-    /* [19] = "#464b50", */
-    /* [20] = "#838184", */
-    /* [21] = "#c3c3c3", */
-
-    /* /\* special colors *\/ */
-    /* [256] = "#fdf6e3", /\* background *\/ */
-    /* [257] = "#657b83", /\* foreground *\/ */
-
-    /* dark */
-    /* /\* 8 normal colors *\/ */
-    /* [0] = "#000000", /\* black   *\/ */
-    /* [1] = "#ff5555", /\* red     *\/ */
-    /* [2] = "#50fa7b", /\* green   *\/ */
-    /* [3] = "#f1fa8c", /\* yellow  *\/ */
-    /* [4] = "#bd93f9", /\* blue    *\/ */
-    /* [5] = "#ff79c6", /\* magenta *\/ */
-    /* [6] = "#8be9fd", /\* cyan    *\/ */
-    /* [7] = "#bbbbbb", /\* white   *\/ */
-
-    /* /\* 8 bright colors *\/ */
-    /* [8] = "#44475a",  /\* black   *\/ */
-    /* [9] = "#ff5555",  /\* red     *\/ */
-    /* [10] = "#50fa7b", /\* green   *\/ */
-    /* [11] = "#f1fa8c", /\* yellow  *\/ */
-    /* [12] = "#bd93f9", /\* blue    *\/ */
-    /* [13] = "#ff79c6", /\* magenta *\/ */
-    /* [14] = "#8be9fd", /\* cyan    *\/ */
-    /* [15] = "#ffffff", /\* white   *\/ */
-
-    /* /\* special colors *\/ */
-    /* [256] = "#282a36", /\* background *\/ */
-    /* [257] = "#f8f8f2", /\* foreground *\/ */
-
-    /* gruvbox */
-    /* 8 normal colors */
-    [0] = "#282828", /* black   */
-    [1] = "#cc241d", /* red     */
-    [2] = "#98971a", /* green   */
-    [3] = "#d79921", /* yellow  */
-    [4] = "#458588", /* blue    */
-    [5] = "#b16286", /* magenta */
-    [6] = "#689d6a", /* cyan    */
-    [7] = "#a89984", /* white   */
-
-    /* 8 bright colors */
-    [8] = "#928374",  /* black   */
-    [9] = "#fb4934",  /* red     */
-    [10] = "#b8bb26", /* green   */
-    [11] = "#fabd2f", /* yellow  */
-    [12] = "#83a598", /* blue    */
-    [13] = "#d3869b", /* magenta */
-    [14] = "#8ec07c", /* cyan    */
-    [15] = "#ebdbb2", /* white   */
-
-    /* special colors */
-    [256] = "#282828", /* background */
-    [257] = "#ebdbb2", /* foreground */
+    "#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
+    "#cc241d",
+    "#98971a",
+    "#d79921",
+    "#458588",
+    "#b16286",
+    "#689d6a",
+    "#a89984",
+    "#928374",
+    "#fb4934",
+    "#b8bb26",
+    "#fabd2f",
+    "#83a598",
+    "#d3869b",
+    "#8ec07c",
+    "#ebdbb2",
 };
+
+
 /*
  * Default colors (colorname index)
  * foreground, background, cursor
  */
-unsigned int defaultfg = 257;
-unsigned int defaultbg = 256;
-static unsigned int defaultcs = 257;
-static unsigned int defaultrcs = 257;
+unsigned int defaultfg = 15;
+unsigned int defaultbg = 0;
+static unsigned int defaultcs = 15;
+static unsigned int defaultrcs = 15;
 
-/*
- * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
- */
-unsigned int defaultitalic = 7;
-unsigned int defaultunderline = 7;
+static unsigned int defaultitalic = 11;
+static unsigned int defaultunderline = 7;
+#endif
+
+#ifdef SOLARIZED_DARK
+static const char *colorname[] = {
+	/* solarized dark */
+	"#073642",  /*  0: black    */
+	"#dc322f",  /*  1: red      */
+	"#859900",  /*  2: green    */
+	"#b58900",  /*  3: yellow   */
+	"#268bd2",  /*  4: blue     */
+	"#d33682",  /*  5: magenta  */
+	"#2aa198",  /*  6: cyan     */
+	"#eee8d5",  /*  7: white    */
+	"#002b36",  /*  8: brblack  */
+	"#cb4b16",  /*  9: brred    */
+	"#586e75",  /* 10: brgreen  */
+	"#657b83",  /* 11: bryellow */
+	"#839496",  /* 12: brblue   */
+	"#6c71c4",  /* 13: brmagenta*/
+	"#93a1a1",  /* 14: brcyan   */
+	"#fdf6e3",  /* 15: brwhite  */
+};
+unsigned int defaultfg = 12;
+unsigned int defaultbg = 8;
+static unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 14;
+
+static unsigned int defaultitalic = 11;
+static unsigned int defaultunderline = 7;
+#endif
+
+#ifdef SOLARIZED_LIGHT
+static const char *colorname[] = {
+	/* solarized dark */
+	"#073642",  /*  0: black    */
+	"#dc322f",  /*  1: red      */
+	"#859900",  /*  2: green    */
+	"#b58900",  /*  3: yellow   */
+	"#268bd2",  /*  4: blue     */
+	"#d33682",  /*  5: magenta  */
+	"#2aa198",  /*  6: cyan     */
+	"#eee8d5",  /*  7: white    */
+	"#002b36",  /*  8: brblack  */
+	"#cb4b16",  /*  9: brred    */
+	"#586e75",  /* 10: brgreen  */
+	"#657b83",  /* 11: bryellow */
+	"#839496",  /* 12: brblue   */
+	"#6c71c4",  /* 13: brmagenta*/
+	"#93a1a1",  /* 14: brcyan   */
+	"#fdf6e3",  /* 15: brwhite  */
+};
+unsigned int defaultfg = 11;
+unsigned int defaultbg = 7;
+static unsigned int defaultcs = 10;
+static unsigned int defaultrcs = 10;
+
+static unsigned int defaultitalic = 12;
+static unsigned int defaultunderline = 0;
+#endif
+
 /*
  * Default style of cursor
  * 0: blinking block
@@ -262,7 +254,7 @@ static char *openurlcmd[] = { "/bin/sh", "-c",
 static char *copyurlcmd[] = { "/bin/sh", "-c",
     "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
     "externalpipe", NULL };
-static char *copyoutput[] = { "st-copyout", "externalpipe", NULL };
+static char *copyoutput[] = {"/bin/sh", "-c", "/usr/local/bin/st-copyout", "externalpipe", NULL};
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
