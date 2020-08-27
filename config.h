@@ -94,7 +94,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 2;
 
 /* bg opacity */
-float alpha = 0.9;
+float alpha = 0.82;
 
 #ifdef GRUVBOX
 static const char *colorname[] = {
@@ -186,6 +186,37 @@ static unsigned int defaultrcs = 10;
 
 static unsigned int defaultitalic = 12;
 static unsigned int defaultunderline = 0;
+#endif
+
+#ifdef ONE_DARK
+static const char *colorname[] = {
+	"#1e2127",  /*  0: black    */
+	"#e06c75",  /*  1: red      */
+	"#98c379",  /*  2: green    */
+	"#d19a66",  /*  3: yellow   */
+	"#61afef",  /*  4: blue     */
+	"#c678dd",  /*  5: magenta  */
+	"#56b6c2",  /*  6: cyan     */
+	"#828791",  /*  7: white    */
+	"#5c6370",  /*  8: brblack  */
+	"#e06c75",  /*  9: brred    */
+	"#98c379",  /* 10: brgreen  */
+	"#d19a66",  /* 11: bryellow */
+	"#61afef",  /* 12: brblue   */
+	"#c678dd",  /* 13: brmagenta*/
+	"#56b6c2",  /* 14: brcyan   */
+	"#e6efff",  /* 15: brwhite  */
+
+  [256] = "#1e2127", /* background */
+  [257] = "#abb2bf", /* foreground */
+};
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+static unsigned int defaultcs = 257;
+static unsigned int defaultrcs = 257;
+
+static unsigned int defaultitalic = 7;
+static unsigned int defaultunderline = 7;
 #endif
 
 /*
