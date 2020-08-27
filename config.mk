@@ -23,7 +23,7 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft -lXrender\
        `$(PKG_CONFIG) --libs harfbuzz`
 
 # flags
-STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -DSOLARIZED_LIGHT
+STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -DSOLARIZED_DARK
 STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS) -O2 -fomit-frame-pointer
 STLDFLAGS = $(LIBS) $(LDFLAGS)
 
@@ -34,4 +34,4 @@ STLDFLAGS = $(LIBS) $(LDFLAGS)
 #       `pkg-config --libs freetype2`
 
 # compiler and linker
-# CC = c99
+CC = ccache gcc
