@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Monaco:pixelsize=16:antialias=true:autohint=true";
+static char *font =
+  "Ricty Diminished Discord with Fira Code:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 9;
 
 /*
@@ -125,9 +126,6 @@ unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
 static unsigned int defaultcs = 15;
 static unsigned int defaultrcs = 15;
-
-static unsigned int defaultitalic = 11;
-static unsigned int defaultunderline = 7;
 #endif
 
 #ifdef SOLARIZED_DARK
@@ -153,39 +151,33 @@ static const char *colorname[] = {
 unsigned int defaultfg = 12;
 unsigned int defaultbg = 8;
 static unsigned int defaultcs = 14;
-static unsigned int defaultrcs = 14;
-
-static unsigned int defaultitalic = 11;
-static unsigned int defaultunderline = 7;
+static unsigned int defaultrcs = 15;
 #endif
 
 #ifdef SOLARIZED_LIGHT
 static const char *colorname[] = {
-	/* solarized dark */
-	"#073642",  /*  0: black    */
-	"#dc322f",  /*  1: red      */
-	"#859900",  /*  2: green    */
-	"#b58900",  /*  3: yellow   */
-	"#268bd2",  /*  4: blue     */
-	"#d33682",  /*  5: magenta  */
-	"#2aa198",  /*  6: cyan     */
-	"#eee8d5",  /*  7: white    */
-	"#002b36",  /*  8: brblack  */
-	"#cb4b16",  /*  9: brred    */
-	"#586e75",  /* 10: brgreen  */
-	"#657b83",  /* 11: bryellow */
-	"#839496",  /* 12: brblue   */
-	"#6c71c4",  /* 13: brmagenta*/
-	"#93a1a1",  /* 14: brcyan   */
-	"#fdf6e3",  /* 15: brwhite  */
+  /* solarized light */
+  "#eee8d5", /*  0: black    */
+  "#dc322f", /*  1: red      */
+  "#859900", /*  2: green    */
+  "#b58900", /*  3: yellow   */
+  "#268bd2", /*  4: blue     */
+  "#d33682", /*  5: magenta  */
+  "#2aa198", /*  6: cyan     */
+  "#073642", /*  7: white    */
+  "#fdf6e3", /*  8: brblack  */
+  "#cb4b16", /*  9: brred    */
+  "#93a1a1", /* 10: brgreen  */
+  "#839496", /* 11: bryellow */
+  "#657b83", /* 12: brblue   */
+  "#6c71c4", /* 13: brmagenta*/
+  "#586e75", /* 14: brcyan   */
+  "#002b36", /* 15: brwhite  */
 };
-unsigned int defaultfg = 11;
-unsigned int defaultbg = 7;
-static unsigned int defaultcs = 10;
-static unsigned int defaultrcs = 10;
-
-static unsigned int defaultitalic = 12;
-static unsigned int defaultunderline = 0;
+unsigned int defaultfg = 12;
+unsigned int defaultbg = 8;
+static unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 15;
 #endif
 
 #ifdef ONE_DARK
@@ -214,9 +206,6 @@ unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
 static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
-
-static unsigned int defaultitalic = 7;
-static unsigned int defaultunderline = 7;
 #endif
 
 /*
