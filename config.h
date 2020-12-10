@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font =
-  "FiraCode QiHei NF:pixelsize=18:antialias=true:autohint=true";
+  "FiraCode QiHei NF:pixelsize=16:antialias=true:autohint=true";
   // "Ricty Diminished Discord with Fira Code:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 9;
 
@@ -47,7 +47,7 @@ int allowaltscreen = 1;
 
 /* allow certain non-interactive (insecure) window operations such as:
    setting the clipboard text */
-int allowwindowops = 0;
+int allowwindowops = 1;
 
 /*
  * draw latency range in ms - from new content/keypress/etc until drawing.
