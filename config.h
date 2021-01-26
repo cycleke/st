@@ -6,8 +6,9 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font =
-  "FiraCode QiHei NF:pixelsize=16:antialias=true:autohint=true";
-  // "Ricty Diminished Discord with Fira Code:pixelsize=20:antialias=true:autohint=true";
+    "FiraCode QiHei NF:pixelsize=16:antialias=true:autohint=true";
+// "Ricty Diminished Discord with Fira
+// Code:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 9;
 
 /*
@@ -118,95 +119,108 @@ static const char *colorname[] = {
     "#ebdbb2",
 };
 
-
-/*
- * Default colors (colorname index)
- * foreground, background, cursor
- */
 unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
 static unsigned int defaultcs = 15;
 static unsigned int defaultrcs = 15;
-#endif
-
-#ifdef SOLARIZED_DARK
+#elif defined(SOLARIZED_DARK)
 static const char *colorname[] = {
-	/* solarized dark */
-	"#073642",  /*  0: black    */
-	"#dc322f",  /*  1: red      */
-	"#859900",  /*  2: green    */
-	"#b58900",  /*  3: yellow   */
-	"#268bd2",  /*  4: blue     */
-	"#d33682",  /*  5: magenta  */
-	"#2aa198",  /*  6: cyan     */
-	"#eee8d5",  /*  7: white    */
-	"#002b36",  /*  8: brblack  */
-	"#cb4b16",  /*  9: brred    */
-	"#586e75",  /* 10: brgreen  */
-	"#657b83",  /* 11: bryellow */
-	"#839496",  /* 12: brblue   */
-	"#6c71c4",  /* 13: brmagenta*/
-	"#93a1a1",  /* 14: brcyan   */
-	"#fdf6e3",  /* 15: brwhite  */
+    /* solarized dark */
+    "#073642", /*  0: black    */
+    "#dc322f", /*  1: red      */
+    "#859900", /*  2: green    */
+    "#b58900", /*  3: yellow   */
+    "#268bd2", /*  4: blue     */
+    "#d33682", /*  5: magenta  */
+    "#2aa198", /*  6: cyan     */
+    "#eee8d5", /*  7: white    */
+    "#002b36", /*  8: brblack  */
+    "#cb4b16", /*  9: brred    */
+    "#586e75", /* 10: brgreen  */
+    "#657b83", /* 11: bryellow */
+    "#839496", /* 12: brblue   */
+    "#6c71c4", /* 13: brmagenta*/
+    "#93a1a1", /* 14: brcyan   */
+    "#fdf6e3", /* 15: brwhite  */
 };
 unsigned int defaultfg = 12;
 unsigned int defaultbg = 8;
 static unsigned int defaultcs = 14;
 static unsigned int defaultrcs = 15;
-#endif
-
-#ifdef SOLARIZED_LIGHT
+#elif defined(SOLARIZED_LIGHT)
 static const char *colorname[] = {
-  /* solarized light */
-  "#eee8d5", /*  0: black    */
-  "#dc322f", /*  1: red      */
-  "#859900", /*  2: green    */
-  "#b58900", /*  3: yellow   */
-  "#268bd2", /*  4: blue     */
-  "#d33682", /*  5: magenta  */
-  "#2aa198", /*  6: cyan     */
-  "#073642", /*  7: white    */
-  "#fdf6e3", /*  8: brblack  */
-  "#cb4b16", /*  9: brred    */
-  "#93a1a1", /* 10: brgreen  */
-  "#839496", /* 11: bryellow */
-  "#657b83", /* 12: brblue   */
-  "#6c71c4", /* 13: brmagenta*/
-  "#586e75", /* 14: brcyan   */
-  "#002b36", /* 15: brwhite  */
+    /* solarized light */
+    "#eee8d5", /*  0: black    */
+    "#dc322f", /*  1: red      */
+    "#859900", /*  2: green    */
+    "#b58900", /*  3: yellow   */
+    "#268bd2", /*  4: blue     */
+    "#d33682", /*  5: magenta  */
+    "#2aa198", /*  6: cyan     */
+    "#073642", /*  7: white    */
+    "#fdf6e3", /*  8: brblack  */
+    "#cb4b16", /*  9: brred    */
+    "#93a1a1", /* 10: brgreen  */
+    "#839496", /* 11: bryellow */
+    "#657b83", /* 12: brblue   */
+    "#6c71c4", /* 13: brmagenta*/
+    "#586e75", /* 14: brcyan   */
+    "#002b36", /* 15: brwhite  */
 };
 unsigned int defaultfg = 12;
 unsigned int defaultbg = 8;
 static unsigned int defaultcs = 14;
 static unsigned int defaultrcs = 15;
-#endif
-
-#ifdef ONE_DARK
+#elif defined(ONE_DARK)
 static const char *colorname[] = {
-	"#1e2127",  /*  0: black    */
-	"#e06c75",  /*  1: red      */
-	"#98c379",  /*  2: green    */
-	"#d19a66",  /*  3: yellow   */
-	"#61afef",  /*  4: blue     */
-	"#c678dd",  /*  5: magenta  */
-	"#56b6c2",  /*  6: cyan     */
-	"#828791",  /*  7: white    */
-	"#5c6370",  /*  8: brblack  */
-	"#e06c75",  /*  9: brred    */
-	"#98c379",  /* 10: brgreen  */
-	"#d19a66",  /* 11: bryellow */
-	"#61afef",  /* 12: brblue   */
-	"#c678dd",  /* 13: brmagenta*/
-	"#56b6c2",  /* 14: brcyan   */
-	"#e6efff",  /* 15: brwhite  */
+    "#1e2127", /*  0: black    */
+    "#e06c75", /*  1: red      */
+    "#98c379", /*  2: green    */
+    "#d19a66", /*  3: yellow   */
+    "#61afef", /*  4: blue     */
+    "#c678dd", /*  5: magenta  */
+    "#56b6c2", /*  6: cyan     */
+    "#828791", /*  7: white    */
+    "#5c6370", /*  8: brblack  */
+    "#e06c75", /*  9: brred    */
+    "#98c379", /* 10: brgreen  */
+    "#d19a66", /* 11: bryellow */
+    "#61afef", /* 12: brblue   */
+    "#c678dd", /* 13: brmagenta*/
+    "#56b6c2", /* 14: brcyan   */
+    "#e6efff", /* 15: brwhite  */
 
-  [256] = "#1e2127", /* background */
-  [257] = "#abb2bf", /* foreground */
+    [256] = "#1e2127", /* background */
+    [257] = "#abb2bf", /* foreground */
 };
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
 static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
+#else
+static const char *colorname[] = {
+  "#f1efee", /* base00 */
+  "#f22c40", /* base08 */
+  "#7b9726", /* base0B */
+  "#c38418", /* base0A */
+  "#407ee7", /* base0D */
+  "#6666ea", /* base0E */
+  "#3d97b8", /* base0C */
+  "#68615e", /* base05 */
+  "#9c9491", /* base03 */
+  "#df5320", /* base09 */
+  "#e6e2e0", /* base01 */
+  "#a8a19f", /* base02 */
+  "#766e6b", /* base04 */
+  "#2c2421", /* base06 */
+  "#c33ff3", /* base0F */
+  "#1b1918", /* base07 */
+};
+
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 0;
+static unsigned int defaultcs = 13;
+static unsigned int defaultrcs = 0;
 #endif
 
 /*
@@ -254,53 +268,64 @@ static uint forcemousemod = ShiftMask;
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-	/* mask                 button   function        argument       release */
-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
-  {ControlMask,           Button4, zoom,           {.f = +1}},
-  {ControlMask,           Button5, zoom,           {.f = -1}},
+    /* mask                 button   function        argument       release */
+    {XK_ANY_MOD, Button2, selpaste, {.i = 0}, 1},
+    {ShiftMask, Button4, ttysend, {.s = "\033[5;2~"}},
+    {XK_ANY_MOD, Button4, ttysend, {.s = "\031"}},
+    {ShiftMask, Button5, ttysend, {.s = "\033[6;2~"}},
+    {XK_ANY_MOD, Button5, ttysend, {.s = "\005"}},
+    {ControlMask, Button4, zoom, {.f = +1}},
+    {ControlMask, Button5, zoom, {.f = -1}},
 };
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
-#define TERMMOD (ControlMask|ShiftMask)
+#define TERMMOD (ControlMask | ShiftMask)
 
 // from @LukeSmithxyz
-static char *openurlcmd[] = { "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
-    "externalpipe", NULL };
-static char *copyurlcmd[] = { "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
-    "externalpipe", NULL };
-static char *copyoutput[] = {"/bin/sh", "-c", "/usr/local/bin/st-copyout", "externalpipe", NULL};
+static char *openurlcmd[] = {
+    "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo "
+    "'(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./"
+    "&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed "
+    "'s/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | "
+    "xargs -r xdg-open",
+    "externalpipe", NULL};
+static char *copyurlcmd[] = {
+    "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo "
+    "'(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./"
+    "&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed "
+    "'s/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr "
+    "-d '\n' | xclip -selection clipboard",
+    "externalpipe", NULL};
+static char *copyoutput[] = {"/bin/sh", "-c", "/usr/local/bin/st-copyout",
+                             "externalpipe", NULL};
 
 static Shortcut shortcuts[] = {
-	/* mask                 keysym          function        argument */
-  { Mod1Mask|ControlMask, XK_l,           externalpipe,   {.v = openurlcmd } },
-	{ Mod1Mask,             XK_y,           externalpipe,   {.v = copyurlcmd } },
-	{ Mod1Mask,             XK_c,           externalpipe,   {.v = copyoutput } },
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
-  { ControlMask,          XK_equal,       zoom,           {.f = +1} },
-  { ControlMask,          XK_minus,       zoom,           {.f = -1} },
-  { ControlMask,          XK_0,           zoomreset,      {.f =  0} },
-  { Mod1Mask,             XK_j,           kscrollup,      {.i =  1} },
-  { Mod1Mask,             XK_k,           kscrolldown,    {.i =  1} },
+    /* mask                 keysym          function        argument */
+    {Mod1Mask | ControlMask, XK_l, externalpipe, {.v = openurlcmd}},
+    {Mod1Mask, XK_y, externalpipe, {.v = copyurlcmd}},
+    {Mod1Mask, XK_c, externalpipe, {.v = copyoutput}},
+    {XK_ANY_MOD, XK_Break, sendbreak, {.i = 0}},
+    {ControlMask, XK_Print, toggleprinter, {.i = 0}},
+    {ShiftMask, XK_Print, printscreen, {.i = 0}},
+    {XK_ANY_MOD, XK_Print, printsel, {.i = 0}},
+    {TERMMOD, XK_Prior, zoom, {.f = +1}},
+    {TERMMOD, XK_Next, zoom, {.f = -1}},
+    {TERMMOD, XK_Home, zoomreset, {.f = 0}},
+    {TERMMOD, XK_C, clipcopy, {.i = 0}},
+    {TERMMOD, XK_V, clippaste, {.i = 0}},
+    {TERMMOD, XK_Y, selpaste, {.i = 0}},
+    {ShiftMask, XK_Insert, selpaste, {.i = 0}},
+    {TERMMOD, XK_Num_Lock, numlock, {.i = 0}},
+    {ShiftMask, XK_Page_Up, kscrollup, {.i = -1}},
+    {ShiftMask, XK_Page_Down, kscrolldown, {.i = -1}},
+    {ControlMask, XK_equal, zoom, {.f = +1}},
+    {ControlMask, XK_minus, zoom, {.f = -1}},
+    {ControlMask, XK_0, zoomreset, {.f = 0}},
+    {Mod1Mask, XK_j, kscrollup, {.i = 1}},
+    {Mod1Mask, XK_k, kscrolldown, {.i = 1}},
 };
 
 /*
@@ -568,7 +593,6 @@ static uint selmasks[] = {
  * Printable characters in ASCII, used to estimate the advance width
  * of single wide characters.
  */
-static char ascii_printable[] =
-	" !\"#$%&'()*+,-./0123456789:;<=>?"
-	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
-	"`abcdefghijklmnopqrstuvwxyz{|}~";
+static char ascii_printable[] = " !\"#$%&'()*+,-./0123456789:;<=>?"
+                                "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+                                "`abcdefghijklmnopqrstuvwxyz{|}~";
