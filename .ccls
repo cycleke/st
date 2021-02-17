@@ -1,0 +1,12 @@
+-std=c11
+-DVERSION
+-I/usr/include/X11
+-I/usr/include/freetype2
+-I/usr/include/libpng16
+-I/usr/include/harfbuzz
+-I/usr/include/glib-2.0
+-I/usr/lib/glib-2.0/include
+-L/usr/lib/X11
+-lfontconfig
+-lfreetype
+-lharfbuzz

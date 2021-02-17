@@ -1,14 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
-/*
- * appearance
- *
- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
- */
+#pragma once
+
+#include "st.h"
+#include "x.c"
+
+/* appearance */
 static char *font =
-    "FiraCode QiHei NF:pixelsize=16:antialias=true:autohint=true";
-// "Ricty Diminished Discord with Fira
-// Code:pixelsize=20:antialias=true:autohint=true";
+    "Sarasa Mono Sc Nerd:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 9;
 
 /*
@@ -97,26 +96,14 @@ char *termname = "st-256color";
 unsigned int tabspaces = 2;
 
 /* bg opacity */
-float alpha = 0.82;
+float alpha = 0.9;
 
 #ifdef GRUVBOX
 static const char *colorname[] = {
     "#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
-    "#cc241d",
-    "#98971a",
-    "#d79921",
-    "#458588",
-    "#b16286",
-    "#689d6a",
-    "#a89984",
-    "#928374",
-    "#fb4934",
-    "#b8bb26",
-    "#fabd2f",
-    "#83a598",
-    "#d3869b",
-    "#8ec07c",
-    "#ebdbb2",
+    "#cc241d", "#98971a", "#d79921", "#458588", "#b16286",
+    "#689d6a", "#a89984", "#928374", "#fb4934", "#b8bb26",
+    "#fabd2f", "#83a598", "#d3869b", "#8ec07c", "#ebdbb2",
 };
 
 unsigned int defaultfg = 15;
@@ -199,27 +186,27 @@ static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
 #else
 static const char *colorname[] = {
-  "#f1efee", /* base00 */
-  "#f22c40", /* base08 */
-  "#7b9726", /* base0B */
-  "#c38418", /* base0A */
-  "#407ee7", /* base0D */
-  "#6666ea", /* base0E */
-  "#3d97b8", /* base0C */
-  "#68615e", /* base05 */
-  "#9c9491", /* base03 */
-  "#df5320", /* base09 */
-  "#e6e2e0", /* base01 */
-  "#a8a19f", /* base02 */
-  "#766e6b", /* base04 */
-  "#2c2421", /* base06 */
-  "#c33ff3", /* base0F */
-  "#1b1918", /* base07 */
+    "#eeeeee", /*  0: black    */
+    "#af0000", /*  1: red      */
+    "#008700", /*  2: green    */
+    "#5f8700", /*  3: yellow   */
+    "#0087af", /*  4: blue     */
+    "#878787", /*  5: magenta  */
+    "#005f87", /*  6: cyan     */
+    "#444444", /*  7: white    */
+    "#bcbcbc", /*  8: brblack  */
+    "#d70000", /*  9: brred    */
+    "#d70087", /* 10: brgreen  */
+    "#8700af", /* 11: bryellow */
+    "#d75f00", /* 12: brblue   */
+    "#d75f00", /* 13: brmagenta*/
+    "#005faf", /* 14: brcyan   */
+    "#005f87", /* 15: brwhite  */
 };
 
-unsigned int defaultfg = 7;
+unsigned int defaultfg = 5;
 unsigned int defaultbg = 0;
-static unsigned int defaultcs = 13;
+static unsigned int defaultcs = 5;
 static unsigned int defaultrcs = 0;
 #endif
 
